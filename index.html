@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>숙풍 제16회 정기공연 "도란도란"</title>
 
-  <!-- Open Graph (카톡/네이버/라인 공유 미리보기) -->
+  <!-- OG -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="숙풍 제16회 정기공연 '도란도란'">
   <meta property="og:description" content="삼삼오오 정답게 모여 만들어내는 맑은 바람소리">
@@ -14,23 +14,47 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <style>
-    html, body { margin:0; padding:0; height:100%; }
-    iframe { width:100%; height:100%; border:none; }
-    .fallback {
-      text-align:center; padding:16px;
-      font-family: system-ui, sans-serif; font-size:14px;
-    }
+    /* iOS에서 100% 대신 100vh를 강제. 인앱 스크롤 이슈를 피하려고 fixed 컨테이너 사용 */
+    html, body { margin:0; padding:0; height:100%; overflow:hidden; background:#fff; }
+    #wrap { position:fixed; inset:0; }
+    iframe { width:100%; height:100vh; border:0; }
+    .fallback { position:fixed; left:0; right:0; bottom:0; padding:8px; text-align:center;
+                font: 14px/1.4 system-ui, -apple-system, Segoe UI, Arial; background:#fff8;
+                backdrop-filter: blur(2px); }
+    .fallback a { padding:8px 12px; border:1px solid #ccc; border-radius:10px; text-decoration:none; }
   </style>
 </head>
 <body>
-  <!-- Google Docs Viewer: 아이폰에서도 스크롤로 전체 페이지 표시 -->
-  <iframe 
-    src="https://docs.google.com/gview?embedded=1&url=https://hellosub-in.github.io/sookpoong16th/sookpoong16th_leaflet.pdf">
-  </iframe>
-
-  <!-- PDF 직접 열기 링크 (혹시 뷰어가 안 뜰 때 대비) -->
-  <div class="fallback">
-    <p>만약 PDF가 보이지 않는다면 <a href="sookpoong16th_leaflet.pdf" target="_blank" rel="noopener">여기</a>를 눌러 열어주세요.</p>
+  <div id="wrap">
+    <iframe id="viewer" allow="fullscreen"></iframe>
   </div>
+
+  <div class="fallback">
+    보이지 않으면 <a href="sookpoong16th_leaflet.pdf" target="_blank" rel="noopener">PDF 원본 열기</a>
+  </div>
+
+  <script>
+    // PDF 원본(절대 URL + 인코딩)
+    const PDF_URL = 'https://hellosub-in.github.io/sookpoong16th/sookpoong16th_leaflet.pdf';
+    const encoded = encodeURIComponent(PDF_URL);
+
+    // iPhone/인앱에서 gview가 뷰포트 오판하는 경우가 있어 viewerng로 우회
+    const ua = navigator.userAgent.toLowerCase();
+    const isIphone = /iphone/.test(ua);
+    const isInApp = /kakaotalk|instagram|fbav|line/.test(ua);
+
+    // 1안: Google Docs Viewer (신형)
+    const gview = `https://docs.google.com/gview?embedded=1&url=${encoded}`;
+
+    // 2안: Google Viewer(NG, 구버전) — iOS에서 더 안정적인 케이스가 종종 있음
+    const viewerng = `https://drive.google.com/viewerng/viewer?embedded=1&url=${encoded}`;
+
+    // iPhone 또는 인앱이면 우선 viewerng, 그 외는 gview
+    const src = (isIphone || isInApp) ? viewerng : gview;
+    document.getElementById('viewer').src = src;
+
+    // 혹시 iOS 스크롤 막힘 방지용 터치 스크롤 허용
+    document.getElementById('viewer').style.webkitOverflowScrolling = 'touch';
+  </script>
 </body>
 </html>
