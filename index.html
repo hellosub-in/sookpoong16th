@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>숙풍 제16회 정기공연 "도란도란"</title>
 
-  <!-- OG 메타 (카톡 공유용) -->
+  <!-- 공유 미리보기 -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="숙풍 제16회 정기공연 '도란도란'">
   <meta property="og:description" content="삼삼오오 정답게 모여 만들어내는 맑은 바람소리">
@@ -14,43 +14,37 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <style>
-    body { margin:0; background:#fff; font-family: system-ui, sans-serif; }
-    .wrap { max-width: 1200px; margin:0 auto; padding:10px; }
-    .page { display:block; width:100%; height:auto; margin:0 0 14px;
-            box-shadow:0 2px 10px rgba(0,0,0,.08); }
-    .cap { text-align:center; font-size:12px; color:#555; margin:-6px 0 20px; }
-    .controls { text-align:center; margin:16px 0; }
-    .controls a { display:inline-block; padding:8px 14px;
-                  border:1px solid #ccc; border-radius:8px;
-                  text-decoration:none; color:#333; }
+    body{margin:0;background:#fff;font-family:system-ui,-apple-system,Segoe UI,Arial}
+    .wrap{max-width:1200px;margin:0 auto;padding:10px}
+    .controls{text-align:center;margin:14px 0}
+    .controls a{display:inline-block;padding:8px 14px;border:1px solid #ccc;border-radius:10px;text-decoration:none;color:#333}
+    .page{display:block;width:100%;height:auto;margin:0 0 14px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+    .cap{margin:-6px 0 20px;text-align:center;font-size:12px;color:#666}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="controls">
-      <a href="sookpoong16th_leaflet.pdf" target="_blank" rel="noopener">
-        PDF 원본 열기/다운로드
-      </a>
-    </div>
+    <!-- (선택) PDF 원본 링크: 원본 파일을 남겨둘 때만 표시됩니다 -->
+    <!-- <div class="controls"><a href="sookpoong16th_leaflet.pdf" target="_blank" rel="noopener">PDF 원본 열기/다운로드</a></div> -->
 
-    <!-- 페이지 이미지 나열 -->
-    <img class="page" src="1.png" alt="리플렛 1페이지">
-    <div class="cap">1 / 6</div>
-
-    <img class="page" src="2.png" alt="리플렛 2페이지">
-    <div class="cap">2 / 6</div>
-
-    <img class="page" src="3.png" alt="리플렛 3페이지">
-    <div class="cap">3 / 6</div>
-
-    <img class="page" src="4.png" alt="리플렛 4페이지">
-    <div class="cap">4 / 6</div>
-
-    <img class="page" src="5.png" alt="리플렛 5페이지">
-    <div class="cap">5 / 6</div>
-
-    <img class="page" src="6.png" alt="리플렛 6페이지">
-    <div class="cap">6 / 6</div>
+    <!-- 여기를 이미지 개수에 맞게 자동 생성 -->
+    <div id="pages"></div>
   </div>
+
+  <script>
+    // 파일명이 1.png, 2.png, ... 6.png 라고 하셨으니 이렇게 설정
+    const TOTAL = 6;              // 총 장수
+    const PREFIX = '';            // 접두어 없음
+    const EXT = '.png';           // 확장자
+    const pages = document.getElementById('pages');
+
+    for (let i=1; i<=TOTAL; i++){
+      const src = `${PREFIX}${i}${EXT}`;
+      pages.insertAdjacentHTML('beforeend', `
+        <img class="page" loading="lazy" src="${src}" alt="리플렛 ${i}페이지">
+        <div class="cap">${i} / ${TOTAL}</div>
+      `);
+    }
+  </script>
 </body>
 </html>
