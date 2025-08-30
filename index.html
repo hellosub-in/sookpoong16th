@@ -16,30 +16,22 @@
   <style>
     body{margin:0;background:#fff;font-family:system-ui,-apple-system,Segoe UI,Arial}
     .wrap{max-width:1200px;margin:0 auto;padding:10px}
-    .controls{text-align:center;margin:14px 0}
-    .controls a{display:inline-block;padding:8px 14px;border:1px solid #ccc;border-radius:10px;text-decoration:none;color:#333}
-    .page{display:block;width:100%;height:auto;margin:0 0 14px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
-    .cap{margin:-6px 0 20px;text-align:center;font-size:12px;color:#666}
+    .page{display:block;width:100%;height:auto;margin:0 0 14px;
+          box-shadow:0 2px 10px rgba(0,0,0,.08)}
+    .cap{text-align:center;font-size:12px;color:#666;margin:-6px 0 20px}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <!-- (선택) PDF 원본 링크: 원본 파일을 남겨둘 때만 표시됩니다 -->
-    <!-- <div class="controls"><a href="sookpoong16th_leaflet.pdf" target="_blank" rel="noopener">PDF 원본 열기/다운로드</a></div> -->
-
-    <!-- 여기를 이미지 개수에 맞게 자동 생성 -->
-    <div id="pages"></div>
-  </div>
+  <div class="wrap" id="pages"></div>
 
   <script>
-    // 파일명이 1.png, 2.png, ... 6.png 라고 하셨으니 이렇게 설정
-    const TOTAL = 6;              // 총 장수
-    const PREFIX = '';            // 접두어 없음
-    const EXT = '.png';           // 확장자
-    const pages = document.getElementById('pages');
+    // 총 장수와 파일명 규칙
+    const TOTAL = 6;   // 총 6장
+    const EXT = '.png';
 
+    const pages = document.getElementById('pages');
     for (let i=1; i<=TOTAL; i++){
-      const src = `${PREFIX}${i}${EXT}`;
+      const src = `${i}${EXT}`;
       pages.insertAdjacentHTML('beforeend', `
         <img class="page" loading="lazy" src="${src}" alt="리플렛 ${i}페이지">
         <div class="cap">${i} / ${TOTAL}</div>
