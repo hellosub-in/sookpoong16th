@@ -14,11 +14,9 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <style>
-    body{margin:0;background:#fff;font-family:system-ui,-apple-system,Segoe UI,Arial}
-    .wrap{max-width:1200px;margin:0 auto;padding:10px}
-    .page{display:block;width:100%;height:auto;margin:0 0 14px;
-          box-shadow:0 2px 10px rgba(0,0,0,.08)}
-    .cap{text-align:center;font-size:12px;color:#666;margin:-6px 0 20px}
+    body { margin:0; background:#fff; }
+    .wrap { max-width:1200px; margin:0 auto; }
+    .page { display:block; width:100%; height:auto; margin:0; }
   </style>
 </head>
 <body>
@@ -34,7 +32,6 @@
       const src = `${i}${EXT}`;
       pages.insertAdjacentHTML('beforeend', `
         <img class="page" loading="lazy" src="${src}" alt="리플렛 ${i}페이지">
-        <div class="cap">${i} / ${TOTAL}</div>
       `);
     }
   </script>
